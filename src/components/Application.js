@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
+import DayList from "./DayList"
 
 import "components/Application.scss";
 
-import DayList from "./DayList"
 
 const days = [
   {
@@ -24,6 +24,7 @@ const days = [
 
 
 export default function Application(props) {
+  const [currentDay, setDay] = useState("Monday")
   return (
     <main className="layout">
       <section className="sidebar">
@@ -37,8 +38,8 @@ export default function Application(props) {
 
 <DayList
   days={days}
-  day={"Monday"}
-  setDay={day => console.log(day)}
+  day={currentDay}
+  setDay={day => setDay(day)}
 />
 
 </nav>
