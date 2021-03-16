@@ -13,14 +13,12 @@ const interviewers = [
 
 export default function InterviewerList(props) {
   
-  const [selectedInterviewer, setInterviewer] = useState()
-
-  const listInterviewers = interviewers.map((interviewer) => 
+  const listInterviewers = props.interviewers.map((interviewer) => 
     <InterviewerListItem
       key={interviewer.id}
       {...interviewer}
-      selected={interviewer.id === selectedInterviewer} 
-      setInterviewer={setInterviewer}
+      selected={interviewer.id === props.interviewer}
+      setInterviewer={props.setInterviewer} 
       />
   );
 
