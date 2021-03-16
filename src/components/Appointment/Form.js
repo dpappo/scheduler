@@ -33,9 +33,6 @@ export default function Form(props){
         type="text"
         placeholder="Enter Student Name"
         onChange={handleValChange}
-        /*
-          This must be a controlled component
-        */
       />
     </form>
     <InterviewerList 
