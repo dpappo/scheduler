@@ -8,11 +8,10 @@ export default function DayList(props) {
   useEffect(() =>{
     axios.get("http://localhost:8001/api/days")
       .then(response => {
-        console.log(response)
         setDays(response.data)
       })
   }, [])
-  
+
   const listOfDays = days.map((day, index) => 
     <DayListItem key={index} 
       {...day} 
