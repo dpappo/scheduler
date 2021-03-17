@@ -76,9 +76,12 @@ const appointments = [
 
 
 export default function Application(props) {
-  const [days, setDays] = useState([]);
-  const [currentDay, setDay] = useState("Monday")
+  const [state, setState] = useState({
+    days: [],
+    currentDay: "Monday"
+  })
 
+  const setDay = (day) => setState(prev => ({...prev, currentDay: day}))
 
   return (
     <main className="layout">
@@ -92,8 +95,8 @@ export default function Application(props) {
 <nav className="sidebar__menu">
 
 <DayList
-  days={days}
-  day={currentDay}
+  days={state.days}
+  day={state.currentDay}
   setDay={day => setDay(day)}
 />
 
