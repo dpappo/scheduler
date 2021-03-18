@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import DayList from "./DayList"
 import Appointment from './Appointment/index.js'
 import axios from "axios";
-import {getAppointmentsForDay, getInterview} from "../helpers/selectors"
+import {getAppointmentsForDay, getInterviewersForDay, getInterview} from "../helpers/selectors"
 //import getInterview from "../helpers/selectors"
 import "components/Application.scss";
 
@@ -29,6 +29,8 @@ export default function Application(props) {
   console.log("state: ", state)
 
   const dailyAppointments = getAppointmentsForDay(state, state.currentDay);
+  const dailyInterviewers = getInterviewersForDay(state, state.currentDay);
+  console.log("dailyInt", dailyInterviewers);
 
   const setDay = (day) => setState(prev => ({...prev, currentDay: day}))
 
@@ -65,9 +67,9 @@ export default function Application(props) {
             id={appointment.id} 
             {...appointment}
             interview={interview} 
+            interviewers={dailyInterviewers}
             />})}
         <Appointment key="last" time="9pm" />
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
       </section>
     </main>
   );
