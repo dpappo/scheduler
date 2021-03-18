@@ -30,10 +30,7 @@ export default function Application(props) {
 
   const dailyAppointments = getAppointmentsForDay(state, state.currentDay);
 
-  const setDays = (day) => setState(prev => ({...prev, days: day}))
   const setDay = (day) => setState(prev => ({...prev, currentDay: day}))
-  const setAppointments = (appt) => setState(prev => ({...prev, appointments: appt}))
-  const setInterviewer = (int) => setState(prev => ({...prev, interviewers: int}))
 
 
   return (
