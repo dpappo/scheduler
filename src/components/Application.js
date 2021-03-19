@@ -6,6 +6,7 @@ import {getAppointmentsForDay, getInterviewersForDay, getInterview} from "../hel
 //import getInterview from "../helpers/selectors"
 import "components/Application.scss";
 
+
 export default function Application(props) {
   const [state, setState] = useState({
     days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -34,8 +35,20 @@ export default function Application(props) {
   const setDay = (day) => setState(prev => ({...prev, currentDay: day}))
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    const appointment = {
+    ...state.appointments[id],
+    interview: { ...interview }
+    };
+
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  };
+
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(setState(prev => ({...prev, appointments})))
   }
+
 
   return (
     <main className="layout">

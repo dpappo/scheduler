@@ -5,10 +5,12 @@ import Show from './Show'
 import Empty from './Empty'
 import useVisualMode from "../../hooks/useVisualMode"
 import Form from './Form'
+import Status from './Status'
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
 
 export default function Appointment(props) {
   
@@ -24,7 +26,13 @@ const {bookInterview} = props;
       interviewer
     };
 
-    bookInterview(props.id, interview);
+    transition(SAVING)
+    setTimeout(() => {
+    bookInterview(props.id, interview)
+      .then(transition(SHOW))
+      
+    }, 1000);
+    
   }
 
   return <article className="appointment">
@@ -44,6 +52,7 @@ const {bookInterview} = props;
      
      />}
 
+  {mode === SAVING && <Status/>}
   
   {/* {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />} */}
 
