@@ -6,11 +6,13 @@ import Empty from './Empty'
 import useVisualMode from "../../hooks/useVisualMode"
 import Form from './Form'
 import Status from './Status'
+import Confirm from './Confirm'
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const CONFIRM = "CONFIRM";
 
 export default function Appointment(props) {
   
@@ -18,7 +20,7 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-const {bookInterview} = props;
+const {bookInterview, cancelInterview} = props;
 
   function save(name, interviewer) {
     const interview = {
@@ -27,11 +29,24 @@ const {bookInterview} = props;
     };
 
     transition(SAVING)
-    setTimeout(() => {
     bookInterview(props.id, interview)
-      .then(transition(SHOW))
+      .then(() => transition(SHOW))
       
-    }, 1000);
+    
+  }
+
+  function erase(id) {
+
+    transition(CONFIRM)
+    
+  }
+
+  function actualErase(id) {
+
+    transition(SAVING)
+    cancelInterview(id)
+      .then(() => transition(EMPTY))
+      
     
   }
 
@@ -43,6 +58,7 @@ const {bookInterview} = props;
     <Show
       student={props.interview.student}
       interviewer={props.interview.interviewer}
+      onDelete={() => erase(props.id)}
     />
   )}
   {mode === CREATE && <Form 
@@ -53,6 +69,12 @@ const {bookInterview} = props;
      />}
 
   {mode === SAVING && <Status/>}
+  {mode === CONFIRM && <Confirm 
+    message={"You sure, boss?"}
+    onConfirm={() => actualErase(props.id)}
+    onCancel={() => back()}
+
+    />}
   
   {/* {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />} */}
 

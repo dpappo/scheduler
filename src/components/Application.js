@@ -46,7 +46,12 @@ export default function Application(props) {
   };
 
     return axios.put(`/api/appointments/${id}`, { interview })
-      .then(setState(prev => ({...prev, appointments})))
+      .then(() => setState(prev => ({...prev, appointments})))
+  }
+
+  function cancelInterview(id) {
+    return axios.delete(`/api/appointments/${id}`)
+      .then(() => setState(prev => ({...prev})))
   }
 
 
@@ -84,6 +89,7 @@ export default function Application(props) {
             interview={interview} 
             interviewers={dailyInterviewers}
             bookInterview={bookInterview}
+            cancelInterview={cancelInterview}
             />})}
         <Appointment key="last" time="9pm" />
       </section>
