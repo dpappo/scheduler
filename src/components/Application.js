@@ -3,17 +3,19 @@ import DayList from "./DayList"
 import Appointment from './Appointment/index.js'
 import axios from "axios";
 import {getAppointmentsForDay, getInterviewersForDay, getInterview} from "../helpers/selectors"
-//import getInterview from "../helpers/selectors"
+import useApplicationData from "../hooks/useApplicationData"
 import "components/Application.scss";
 
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    currentDay: "Monday",
-    appointments: {},
-    interviewers: []
-  })
+
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview,
+    setState
+  } = useApplicationData();
   
   useEffect(() => {
 
@@ -31,28 +33,6 @@ export default function Application(props) {
 
   const dailyAppointments = getAppointmentsForDay(state, state.currentDay);
   const dailyInterviewers = getInterviewersForDay(state, state.currentDay);
-
-  const setDay = (day) => setState(prev => ({...prev, currentDay: day}))
-
-  function bookInterview(id, interview) {
-    const appointment = {
-    ...state.appointments[id],
-    interview: { ...interview }
-    };
-
-  const appointments = {
-    ...state.appointments,
-    [id]: appointment
-  };
-
-    return axios.put(`/api/appointments/${id}`, { interview })
-      .then(() => setState(prev => ({...prev, appointments})))
-  }
-
-  function cancelInterview(id) {
-    return axios.delete(`/api/appointments/${id}`)
-      .then(() => setState(prev => ({...prev})))
-  }
 
 
   return (
