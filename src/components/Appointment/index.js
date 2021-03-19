@@ -30,6 +30,8 @@ const {bookInterview, cancelInterview} = props;
       interviewer
     };
 
+  console.log("interview obj: ", interview)
+
     transition(SAVING)
     bookInterview(props.id, interview)
       .then(() => transition(SHOW))
@@ -85,6 +87,7 @@ const {bookInterview, cancelInterview} = props;
      onCancel={() => back()} 
      onSave={(name, interviewer) => save(name, interviewer) }
      name={props.interview.student}
+     interviewer={props.interview.interviewer.id}
 
     />}
   
