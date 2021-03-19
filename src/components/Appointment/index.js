@@ -7,6 +7,7 @@ import useVisualMode from "../../hooks/useVisualMode"
 import Form from './Form'
 import Status from './Status'
 import Confirm from './Confirm'
+import Error from './Error'
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -15,6 +16,8 @@ const SAVING = "SAVING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
 const DELETING = "DELETING";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   
@@ -30,11 +33,10 @@ const {bookInterview, cancelInterview} = props;
       interviewer
     };
 
-  console.log("interview obj: ", interview)
-
     transition(SAVING)
     bookInterview(props.id, interview)
       .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true))
       
     
   }
@@ -47,10 +49,11 @@ const {bookInterview, cancelInterview} = props;
 
   function actualErase(id) {
 
-    transition(DELETING)
+    transition(DELETING, true)
     cancelInterview(id)
       .then(() => transition(EMPTY))
-      
+      .catch(() => transition(ERROR_DELETE, true))
+
     
   }
 
@@ -75,6 +78,8 @@ const {bookInterview, cancelInterview} = props;
 
   {mode === SAVING && <Status message={"Saving"}/>}
   {mode === DELETING && <Status message={"Deleting"}/>}
+  {mode === ERROR_DELETE && <Error message={"Error Deleting"}/>}
+  {mode === ERROR_SAVE && <Error message={"Error Saving"}/>}
   {mode === CONFIRM && <Confirm 
     message={"You sure, boss?"}
     onConfirm={() => actualErase(props.id)}
