@@ -13,6 +13,8 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
+const DELETING = "DELETING";
 
 export default function Appointment(props) {
   
@@ -43,7 +45,7 @@ const {bookInterview, cancelInterview} = props;
 
   function actualErase(id) {
 
-    transition(SAVING)
+    transition(DELETING)
     cancelInterview(id)
       .then(() => transition(EMPTY))
       
@@ -59,6 +61,7 @@ const {bookInterview, cancelInterview} = props;
       student={props.interview.student}
       interviewer={props.interview.interviewer}
       onDelete={() => erase(props.id)}
+      onEdit={() => transition(EDIT)}
     />
   )}
   {mode === CREATE && <Form 
@@ -68,11 +71,20 @@ const {bookInterview, cancelInterview} = props;
      
      />}
 
-  {mode === SAVING && <Status/>}
+  {mode === SAVING && <Status message={"Saving"}/>}
+  {mode === DELETING && <Status message={"Deleting"}/>}
   {mode === CONFIRM && <Confirm 
     message={"You sure, boss?"}
     onConfirm={() => actualErase(props.id)}
     onCancel={() => back()}
+
+    />}
+
+  {mode === EDIT && <Form 
+    interviewers={props.interviewers}
+     onCancel={() => back()} 
+     onSave={(name, interviewer) => save(name, interviewer) }
+     name={props.interview.student}
 
     />}
   
