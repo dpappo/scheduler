@@ -30,10 +30,12 @@ export default function Application(props) {
 
   const dailyAppointments = getAppointmentsForDay(state, state.currentDay);
   const dailyInterviewers = getInterviewersForDay(state, state.currentDay);
-  console.log("dailyInt", dailyInterviewers);
 
   const setDay = (day) => setState(prev => ({...prev, currentDay: day}))
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
 
   return (
     <main className="layout">
@@ -68,6 +70,7 @@ export default function Application(props) {
             {...appointment}
             interview={interview} 
             interviewers={dailyInterviewers}
+            bookInterview={bookInterview}
             />})}
         <Appointment key="last" time="9pm" />
       </section>
