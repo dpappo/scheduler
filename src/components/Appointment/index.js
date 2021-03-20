@@ -25,7 +25,7 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-const {bookInterview, cancelInterview} = props;
+const {bookInterview, cancelInterview, editInterview} = props;
 
   function save(name, interviewer) {
     const interview = {
@@ -35,6 +35,20 @@ const {bookInterview, cancelInterview} = props;
 
     transition(SAVING)
     bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true))
+      
+    
+  }
+
+  function edit(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    transition(SAVING)
+    editInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true))
       
@@ -90,7 +104,7 @@ const {bookInterview, cancelInterview} = props;
   {mode === EDIT && <Form 
     interviewers={props.interviewers}
      onCancel={() => back()} 
-     onSave={(name, interviewer) => save(name, interviewer) }
+     onSave={(name, interviewer) => edit(name, interviewer) }
      name={props.interview.student}
      interviewer={props.interview.interviewer.id}
 

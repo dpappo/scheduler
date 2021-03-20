@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import DayList from "./DayList"
 import Appointment from './Appointment/index.js'
 import axios from "axios";
-import {getAppointmentsForDay, getInterviewersForDay, getInterview} from "../helpers/selectors"
+import {getAppointmentsForDay, getInterviewersForDay, getInterview, updateSpots} from "../helpers/selectors"
 import useApplicationData from "../hooks/useApplicationData"
 import "components/Application.scss";
 
@@ -13,6 +13,7 @@ export default function Application(props) {
     state,
     setDay,
     bookInterview,
+    editInterview,
     cancelInterview,
     setState
   } = useApplicationData();
@@ -50,6 +51,7 @@ export default function Application(props) {
   days={state.days}
   day={state.currentDay}
   setDay={day => setDay(day)}
+  
 />
 
 </nav>
@@ -68,6 +70,7 @@ export default function Application(props) {
             interview={interview} 
             interviewers={dailyInterviewers}
             bookInterview={bookInterview}
+            editInterview={editInterview}
             cancelInterview={cancelInterview}
             />})}
         <Appointment key="last" time="9pm" />

@@ -12,10 +12,15 @@ export default function DayList(props) {
       })
   }, [])
 
+  //console.log("days", days)
+
+console.log("props", props)
+
   const listOfDays = days.map((day, index) => 
     <DayListItem key={index} 
       {...day} 
-      selected={day.name === props.day} 
+      selected={day.name === props.day}
+      spots={props.days[index].spots} 
       setDay={props.setDay}/>)
   
     return <ul>{listOfDays}</ul>
