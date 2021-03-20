@@ -38,13 +38,14 @@ export default function useApplicationData(initial) {
 //   checkForInterviews(state.appointments)
 
 function updateSpots(days, id, value) {
-  days.forEach(day => {
+  const newDays = [...days]
+  newDays.forEach(day => {
     if(day.appointments.includes(id)) {
       day.spots = parseInt(day.spots) + value
       console.log(day.spots)
     }
   })
-  return days;
+  return newDays;
 }
 
 
