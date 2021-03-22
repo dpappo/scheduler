@@ -6,7 +6,7 @@ export default function DayList(props) {
   const [days, setDays] = useState([]);
   
   useEffect(() =>{
-    axios.get("http://localhost:8001/api/days")
+    axios.get("/api/days")
       .then(response => {
         setDays(response.data)
       })
