@@ -42,7 +42,6 @@ function updateSpots(days, id, value) {
   newDays.forEach(day => {
     if(day.appointments.includes(id)) {
       day.spots = parseInt(day.spots) + value
-      console.log(day.spots)
     }
   })
   return newDays;
@@ -60,13 +59,10 @@ function updateSpots(days, id, value) {
     [id]: appointment
   };
   
-    console.log("state: ", state)
    const days = updateSpots([...state.days], id, -1)
 
 
 
-    console.log("state: ", state)
-    console.log("days: ", days)
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => setState(prev => ({...prev, appointments, days})))
