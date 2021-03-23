@@ -6,7 +6,6 @@ import {getAppointmentsForDay, getInterviewersForDay, getInterview, updateSpots}
 import useApplicationData from "../hooks/useApplicationData"
 import "components/Application.scss";
 
-
 export default function Application(props) {
 
   const {
@@ -33,7 +32,6 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.currentDay);
   const dailyInterviewers = getInterviewersForDay(state, state.currentDay);
 
-
   return (
     <main className="layout">
       <section className="sidebar">
@@ -49,7 +47,6 @@ export default function Application(props) {
   days={state.days}
   day={state.currentDay}
   setDay={day => setDay(day)}
-  
 />
 
 </nav>

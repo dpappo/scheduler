@@ -11,7 +11,6 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
-
 export default function InterviewerList(props) {
 
   const listInterviewers = props.interviewers.map((interviewer) => 

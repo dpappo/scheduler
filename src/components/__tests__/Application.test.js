@@ -10,47 +10,66 @@ afterEach(cleanup);
 
 describe("Application", () => {
   it("changes the schedule when a new day is selected", async () => {
+    //Render
     const { getByText } = render(<Application />);
   
+    //Wait for Monday to load
     await waitForElement(() => getByText("Monday"));
     
+    //Click Tuesday
     fireEvent.click(getByText("Tuesday"));
     
+    //Find student on Tuesday page
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
   
-  xit("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+  it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+    
+    //Render
     const { container, debug } = render(<Application />);
+    
+    //Load data
     await waitForElement(() => getByText(container, "Archie Cohen"));
+    
+    //Isolate first appointment
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];
     
+    //Add click
     fireEvent.click(getByAltText(appointment, "Add"));
     
+    //Enter text
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
     
+    //Choose interviewer
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
     
+    //Save
     fireEvent.click(getByText(appointment, "Save"));
     
+    //Confirm saving modal
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
     
+    //Saving modal disappears
     await waitForElementToBeRemoved(() => getByText(appointment, "Saving"));
-    //debug();
 
+    //Confirm it's gone
     expect(queryByText(appointment, "Saving")).not.toBeInTheDocument();
     
+    //Isolate day
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
       );
-            
+    
+    //Make sure spots updates
       expect(queryByText(day, "no spots remaining")).toBeInTheDocument();
     });
 
 
-    xit("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  
   // 1. Render the Application.
   const { container, debug } = render(<Application />);
 
@@ -76,17 +95,18 @@ describe("Application", () => {
   // 7. Wait until the element with the "Add" button is displayed.
   await waitForElement(() => queryByAltText(appointment, "Add"));
 
-  // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
+  // 8. Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
   const day = getAllByTestId(container, "day").find(day =>
     queryByText(day, "Monday")
   );
-     
-      expect(queryByText(day, "2 spots remaining")).toBeInTheDocument();
+
+   expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   
       });
 
 
     it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  
   // 1. Render the Application.
   const { container, debug } = render(<Application />);
 
@@ -117,16 +137,15 @@ describe("Application", () => {
 
   // 7. Wait until the element Save is removed.
     await waitForElementToBeRemoved(() => getByText(appointment, "Saving"));
-    //debug();
 
     expect(queryByText(appointment, "Saving")).not.toBeInTheDocument();
 
-  // 8. Check that the DayListItem with the text "Monday" also has the text "3 spots remaining".
+  // 8. Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
   const day = getAllByTestId(container, "day").find(day =>
     queryByText(day, "Monday")
   );
      
-      expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+  expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   
       });
 
@@ -158,7 +177,7 @@ describe("Application", () => {
   // 6. Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-  // reject value!
+  // reject value! (from mock put)
 
 
   // 7. Wait until the element Save is removed.
@@ -173,11 +192,11 @@ describe("Application", () => {
 
    it("shows the delete error when failing to delete an existing appointment", async () => {
 
-     //fail this test
-        axios.delete.mockRejectedValueOnce();
+  //fail the server action
+  axios.delete.mockRejectedValueOnce();
 
 
-    // 1. Render the Application.
+  // 1. Render the Application.
   const { container, debug } = render(<Application />);
 
   // 2. Wait until the text "Archie Cohen" is displayed.
@@ -199,7 +218,7 @@ describe("Application", () => {
   // 6. Check that the element with the text "Deleting" is displayed.
     expect(queryByText(appointment, "Deleting")).toBeInTheDocument();
 
-  // reject value!
+  // reject value from server mock
 
 
   // 7. Wait until the element Delete is removed.
@@ -208,12 +227,8 @@ describe("Application", () => {
 
 // 8. Expect that the delete error is shown when failing
     expect(getByText(appointment, "Error Deleting")).toBeInTheDocument();
-
-
-
-});
-
-
+  
   });
+});
     
 

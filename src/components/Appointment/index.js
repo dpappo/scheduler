@@ -37,8 +37,6 @@ const {bookInterview, cancelInterview, editInterview} = props;
     bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true))
-      
-    
   }
 
   function edit(name, interviewer) {
@@ -50,15 +48,11 @@ const {bookInterview, cancelInterview, editInterview} = props;
     transition(SAVING)
     editInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch(() => transition(ERROR_SAVE, true))
-      
-    
+      .catch(() => transition(ERROR_SAVE, true))    
   }
 
   function erase(id) {
-
     transition(CONFIRM)
-    
   }
 
   function actualErase(id) {
@@ -67,8 +61,6 @@ const {bookInterview, cancelInterview, editInterview} = props;
     cancelInterview(id)
       .then(() => transition(EMPTY))
       .catch(() => transition(ERROR_DELETE, true))
-
-    
   }
 
   return <article 
@@ -113,7 +105,5 @@ const {bookInterview, cancelInterview, editInterview} = props;
 
     />}
   
-  {/* {props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />} */}
-
   </article>
 }

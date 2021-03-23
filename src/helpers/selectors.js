@@ -11,11 +11,11 @@ export function getAppointmentsForDay(state, name) {
   
   return [];
 }
-export function getInterviewersForDay(state, name) {
+export function getInterviewersForDay(state, dayName) {
   const exportArray = []
 
   for (let i = 0; i < state.days.length; i++) {
-    if(state.days[i].name === name){
+    if(state.days[i].name === dayName){
       for (let j = 0; j < state.days[i].interviewers.length; j++) {
         exportArray.push(state.interviewers[state.days[i].interviewers[j]])
       }
@@ -25,6 +25,7 @@ export function getInterviewersForDay(state, name) {
 
   return [];
 }
+
 export function getInterview(state, interview) {
 
   if (interview){
