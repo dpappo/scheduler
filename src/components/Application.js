@@ -17,17 +17,6 @@ export default function Application(props) {
     setState
   } = useApplicationData();
   
-  useEffect(() => {
-
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
-    ]).then((all) => {
-      setState(prev => ({...prev, days:all[0].data, appointments:all[1].data, interviewers:all[2].data}))
-    })
-    
-  }, [setState])
 
   const dailyAppointments = getAppointmentsForDay(state, state.currentDay);
   const dailyInterviewers = getInterviewersForDay(state, state.currentDay);
