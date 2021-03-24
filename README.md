@@ -23,6 +23,7 @@ This project features a variety of unit, component, integration, and end-to-end 
 
 ### Scheduling Flow
 !['_Showing error handling for invalid form, scheduling, editing, and deleting appointments_'](/images/schedule_flow.gif)
+
 _Showing error handling for invalid form, scheduling, editing, and deleting appointments_
 
 ### Daily view
